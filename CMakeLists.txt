@@ -3,4 +3,4 @@ project(PaintInC C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(PaintInC main.c)
+add_executable(PaintInC main.c drawing.c drawing.h shape.c shape.h command.c command.h)
