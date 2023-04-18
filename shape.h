@@ -33,6 +33,14 @@ typedef struct Polygon {
     Point ** points;
 } Polygon;
 
+typedef enum {POINT , LINE, SQUARE, RECTANGLE, CIRCLE, POLYGON} SHAPE_TYPE;
+
+typedef struct Shape {
+    int id;
+    SHAPE_TYPE shape_type;
+    void *ptrShape;
+}Shape;
+
 Point *createPoint(int x, int y);
 void deletePoint(Point *p);
 void printPoint(Point *p);
@@ -52,5 +60,15 @@ void printCircle(Circle *c);
 Polygon *createPolygon(int n);
 void deletePolygon(Polygon *p);
 void printPolygon(Polygon *p);
+
+Shape *createEmptyShape(SHAPE_TYPE shape_type);
+Shape *createPointShape(int px, int py);
+Shape *createLineShape(int px1, int py1, int px2, int py2);
+Shape *createSquareShape(int px, int py, int length);
+Shape *createRectangleShape(int px, int py, int width, int height);
+Shape *createCircleShape(int px, int py, int radus);
+Shape *createPolygonShape(int lst[], int n);
+void deleteShape(Shape * shape);
+void printShape(Shape * shape);
 
 #endif //PAINTINC_SHAPE_H
