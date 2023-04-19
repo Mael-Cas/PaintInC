@@ -96,7 +96,13 @@ Polygon *createPolygon(int n) {
     Polygon *p = malloc(sizeof(Polygon));
     p->n = n;
     p->points = malloc(sizeof(Point *) * n);
-    // Voir comment faire pour récupérer les points
+    for (int i=0;i<n;i++){
+        int x, y;
+        printf("Entrer les coordonnées du i ème point tel qu'indiqué ici : x;y :");
+        scanf("%d;%d", &x, &y);
+        Point *p2 = createPoint(x, y);
+        *(p->points + i) = p2;
+    }
     return p;
 }
 void deletePolygon(Polygon *p) {
@@ -154,4 +160,33 @@ Shape *createCircleShape(int px, int py, int radius) {
     Circle *c = createCircle(p, radius);
     shp->ptrShape = c;
     return shp;
+}
+
+// Faire la fonction createPolygonShape
+
+void deleteShape(Shape * shape){
+    free(shape);
+    // Pas sûr de cette fonction
+}
+
+void printShape(Shape * shape){
+    // Pas convaincu du fait qu'il faille caster le type
+    if (shape->shape_type == POINT){
+        printPoint((Point *) shape);
+    }
+    else if (shape->shape_type == LINE){
+        printLine((Line *) shape);
+    }
+    else if (shape->shape_type == SQUARE){
+        printSquare((Square *) shape);
+    }
+    else if (shape->shape_type == RECTANGLE){
+        printRectangle((Rectangle *) shape);
+    }
+    else if (shape->shape_type == CIRCLE){
+        printCircle((Circle *) shape);
+    }
+    else if (shape->shape_type == POLYGON){
+        printPolygon((Polygon *) shape);
+    }
 }
