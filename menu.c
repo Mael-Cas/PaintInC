@@ -5,7 +5,7 @@
 #include "menu.h"
 #include "shape.h"
 
-void ajoutShape(Shape* shape, liste lst_shape){
+liste ajoutShape(Shape* shape, liste lst_shape){
     maillon *nv = (maillon*) malloc(sizeof(maillon));
     nv->shape = shape;
     nv->succ = NULL;
@@ -18,6 +18,7 @@ void ajoutShape(Shape* shape, liste lst_shape){
         }
         tmp->succ = nv;
     }
+    return lst_shape;
 }
 
 
@@ -38,7 +39,7 @@ void menuPrincipal(liste lst_shape){
         case 'B':
             affichageForme(lst_shape);
         default:
-            printf("\nProbleme lors du choix");
+            printf("\nProbleme lors du choix\n");
             menuPrincipal(lst_shape);
     }
 }
@@ -71,7 +72,7 @@ void choixCreation(liste lst_shape){
         case 7:
             menuPrincipal(lst_shape);
         default:
-            printf("Probleme lors du choix");
+            printf("Probleme lors du choix\n");
             choixCreation(lst_shape);
     }
 
@@ -81,8 +82,8 @@ void menuPoint(liste lst_shape){
     int x, y;
     printf("Saisir les informations du point x y : ");
     scanf("%d %d", &x, &y);
-    ajoutShape(createPointShape(x, y), lst_shape);
-    printf("Retour au menu principal");
+    lst_shape = ajoutShape(createPointShape(x, y), lst_shape);
+    printf("\n");
     menuPrincipal(lst_shape);
 }
 
@@ -91,10 +92,10 @@ void menuLigne(liste lst_shape){
     printf("Saisir les informations de la ligne : ");
     printf("\n\tSaisir les informations du premier point x1 y1 : ");
     scanf("%d %d", &x1, &y1);
-    printf("\n\tSaisir les informations du point x y : ");
+    printf("\tSaisir les informations du point x y : ");
     scanf("%d %d", &x2, &y2);
-    ajoutShape(createLineShape(x1, y1, x2, y2), lst_shape);
-    printf("Retour au menu principal");
+    lst_shape = ajoutShape(createLineShape(x1, y1, x2, y2), lst_shape);
+    printf("\n");
     menuPrincipal(lst_shape);
 }
 
@@ -104,10 +105,10 @@ void menuCercle(liste lst_shape){
     printf("Saisir les informations du cerlce : ");
     printf("\n\tSaisir les coordonnées du centre : ");
     scanf("%d %d", &x1, &y1);
-    printf("\n\tSaisir la taille du rayon : ");
+    printf("\tSaisir la taille du rayon : ");
     scanf("%d", &radius);
-    ajoutShape(createCircleShape(x1, y1, radius), lst_shape);
-    printf("Retour au menu principal");
+    lst_shape = ajoutShape(createCircleShape(x1, y1, radius), lst_shape);
+    printf("\n");
     menuPrincipal(lst_shape);
 
 
@@ -116,24 +117,25 @@ void menuCercle(liste lst_shape){
 void menuCarre(liste lst_shape){
     int x1, y1, length;
     printf("Saisir les informations du carre : ");
-    printf("\tSaisir les informations du  point x y : ");
+    printf("\n\tSaisir les informations du point x y : ");
     scanf("%d %d", &x1, &y1);
     printf("\tSaisir la longueur du cote : ");
     scanf("%d", &length);
-    ajoutShape(createSquareShape(x1, y1, length), lst_shape);
-    printf("Retour au menu principal");
+    lst_shape = ajoutShape(createSquareShape(x1, y1, length), lst_shape);
+    printf("\n");
     menuPrincipal(lst_shape);
 }
 
 void menuRectangle(liste lst_shape){
     int x,y,w,h;
-    printf("Saisir les coordonnées du point en haut a gauche : ");
+    printf("Saisir les informations du rectangle : ");
+    printf("\n\tSaisir les informations du point x y : ");
     scanf("%d %d", &x, &y);
-
-    printf("Saisir la hauteur et la largeur du rectangle : ");
+    printf("\tSaisir la hauteur et la largeur du rectangle h w : ");
     scanf("%d %d", &h, &w);
-
-    ajoutShape(createRectangleShape(x,y,w,h), lst_shape);
+    lst_shape = ajoutShape(createRectangleShape(x,y,w,h), lst_shape);
+    printf("\n");
+    menuPrincipal(lst_shape);
 }
 
 void menuPolygone(liste lst_shape){
@@ -141,5 +143,35 @@ void menuPolygone(liste lst_shape){
 }
 
 void affichageForme(liste lst_shape){
-    printf("Liste des formes : ");
+    liste temp = lst_shape;
+    printf("\nListe des formes : ");
+    do{
+        if (temp->shape->shape_type == POINT){
+            Point *p = temp->shape->ptrShape;
+            printf("\n\t%d : Point %d %d", temp->shape->id, p->x, p->y);
+        }
+        if (temp->shape->shape_type == LINE){
+            Line *l = temp->shape->ptrShape;
+            printf("\n\t%d : Ligne %d %d | %d %d", temp->shape->id, l->p1.x, l->p1.y, l->p2.x, l->p2.y);
+        }
+        if (temp->shape->shape_type == CIRCLE){
+            Circle *c = temp->shape->ptrShape;
+            printf("\n\t%d : Cercle %d %d | %d", temp->shape->id, c->center.x, c->center.y, c->radius);
+        }
+        if (temp->shape->shape_type == SQUARE){
+            Square *s = temp->shape->ptrShape;
+            printf("\n\t%d : Carre %d %d | %d", temp->shape->id, s->top.x, s->top.y, s->length);
+        }
+        if (temp->shape->shape_type == RECTANGLE){
+            Rectangle *s = temp->shape->ptrShape;
+            printf("\n\t%d : Rectangle %d %d | %d | %d ", temp->shape->id, s->top.x, s->top.y, s->width, s->height);
+        }
+        if (temp->shape->shape_type == POLYGON){
+            Point *p = temp->shape->ptrShape;
+            printf("\n\t%d : Point %d %d", temp->shape->id, p->x, p->y);
+        }
+        temp = temp->succ;
+    } while (temp != NULL);
+    printf("\n");
+    menuPrincipal(lst_shape);
 }

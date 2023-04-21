@@ -15,7 +15,7 @@ typedef struct maillon{
 
 typedef maillon* liste;
 
-void ajoutShape(Shape* shape, liste lst_shape);
+liste ajoutShape(Shape* shape, liste lst_shape);
 void menuPrincipal(liste lst_shape);
 void choixCreation(liste lst_shape);
 void affichageForme(liste lst_shape);
@@ -25,7 +25,7 @@ void menuCercle(liste lst_shape);
 void menuCarre(liste lst_shape);
 void menuRectangle(liste lst_shape);
 void menuPolygone(liste lst_shape);
-void suppForme(liste lst_shape);
+liste suppForme(liste lst_shape);
 void dessin(liste lst_shape);
 void aide();
 
