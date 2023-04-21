@@ -5,6 +5,7 @@
 #include "shape.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "id.h"
 
 //Point
 
@@ -117,7 +118,7 @@ void printPolygon(Polygon *p) {
 Shape *createEmptyShape(SHAPE_TYPE shape_type) {
     Shape *shp = (Shape *) malloc(sizeof(Shape));
     shp->ptrShape = NULL;
-    shp->id = 1; // plus tard on appelera get_next_id();
+    shp->id = getNextId(); // plus tard on appelera get_next_id();
     shp->shape_type = shape_type;
     return shp;
 }
@@ -162,7 +163,7 @@ Shape *createCircleShape(int px, int py, int radius) {
     return shp;
 }
 
-// Faire la fonction createPolygonShape
+//Création de createPolygonShape
 
 void deleteShape(Shape * shape){
     free(shape);

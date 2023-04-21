@@ -4,6 +4,8 @@
 
 #include "id.h"
 
-unsigned int getNextId(){
-    return ++globalId;
+int id;
+
+int getNextId(){
+    return ++id;
 }

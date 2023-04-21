@@ -66,7 +66,7 @@ Shape *createPointShape(int px, int py);
 Shape *createLineShape(int px1, int py1, int px2, int py2);
 Shape *createSquareShape(int px, int py, int length);
 Shape *createRectangleShape(int px, int py, int width, int height);
-Shape *createCircleShape(int px, int py, int radus);
+Shape *createCircleShape(int px, int py, int radius);
 Shape *createPolygonShape(int lst[], int n);
 void deleteShape(Shape * shape);
 void printShape(Shape * shape);

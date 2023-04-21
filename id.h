@@ -5,7 +5,6 @@
 #ifndef PAINTINC_ID_H
 #define PAINTINC_ID_H
 
-unsigned int globalId = 0;
-unsigned int getNextId();
+int getNextId();
 
 #endif //PAINTINC_ID_H

@@ -1,6 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "shape.h"
+#include "command.h"
+#include "menu.h"
 
 int main() {
-    printf("Hello, World!\n");
+    liste lst_shape=NULL;
+    menuPrincipal(lst_shape);
+
     return 0;
 }
