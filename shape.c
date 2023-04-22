@@ -21,7 +21,7 @@ void deletePoint(Point *p) {
 }
 
 void printPoint(Point *p) {
-    printf("POINT [p(%d, %d)]", p->x, p->y);
+    printf("Point %d | %d", p->x, p->y);
 }
 
 //Line
@@ -38,7 +38,7 @@ void deleteLine(Line *l) {
 }
 
 void printLine(Line *l) {
-    printf("LINE [p1(%d, %d) p2(%d, %d)]", l->p1.x, l->p1.y, l->p2.x, l->p2.y);
+    printf("Line p1(%d | %d) | p2(%d | %d)", l->p1.x, l->p1.y, l->p2.x, l->p2.y);
 }
 
 //Square
@@ -55,7 +55,7 @@ void deleteSquare(Square *s) {
 }
 
 void printSquare(Square *s) {
-    printf("SQUARE [top(%d, %d) length(%d)]", s->top.x, s->top.y, s->length);
+    printf("Square top(%d | %d) | length(%d)", s->top.x, s->top.y, s->length);
 }
 
 //Rectangle
@@ -71,7 +71,7 @@ void deleteRectangle(Rectangle *r) {
     free(r);
 }
 void printRectangle(Rectangle *r) {
-    printf("RECTANGLE [top(%d, %d) width(%d) height(%d)]", r->top.x, r->top.y, r->width, r->height);
+    printf("Rectangle top(%d | %d) | width(%d) | height(%d)", r->top.x, r->top.y, r->width, r->height);
 }
 
 //Circle
@@ -88,7 +88,7 @@ void deleteCircle(Circle *c) {
 }
 
 void printCircle(Circle *c) {
-    printf("CIRCLE [center(%d, %d) radius(%d)]", c->center.x, c->center.y, c->radius);
+    printf("Circle center(%d | %d) | radius(%d)", c->center.x, c->center.y, c->radius);
 }
 
 //Polygon
@@ -97,20 +97,16 @@ Polygon *createPolygon(int n) {
     Polygon *p = malloc(sizeof(Polygon));
     p->n = n;
     p->points = malloc(sizeof(Point *) * n);
-    for (int i=0;i<n;i++){
-        int x, y;
-        printf("Entrer les coordonnées du i ème point tel qu'indiqué ici : x;y :");
-        scanf("%d;%d", &x, &y);
-        Point *p2 = createPoint(x, y);
-        *(p->points + i) = p2;
-    }
     return p;
 }
 void deletePolygon(Polygon *p) {
     free(p);
 }
 void printPolygon(Polygon *p) {
-    printf("POLYGON [n(%d) points(%d, %d)]", p->n, p->points[0]->x, p->points[0]->y);
+    printf("Polygon : ");
+    for (int i = 0; i < p->n; i++){
+        printf("\n\tPoint %d (%d | %d)", i+1, p->points[i]->x, p->points[i]->y);
+    }
 }
 
 //Shape
@@ -163,7 +159,21 @@ Shape *createCircleShape(int px, int py, int radius) {
     return shp;
 }
 
-//Création de createPolygonShape
+Shape *createPolygonShape(int lst[], int n){
+    if (n%2 != 0){
+        return NULL;
+    }
+
+    Shape *shp = createEmptyShape(POLYGON);
+    Polygon *p = createPolygon(n/2);
+    int cpt = 0;
+    for (int i=0;i<n;i+=2){
+        *(p->points + cpt) = createPoint(lst[i], lst[i+1]);
+        cpt++;
+    }
+    shp->ptrShape = p;
+    return shp;
+}
 
 void deleteShape(Shape * shape){
     free(shape);
@@ -173,21 +183,27 @@ void deleteShape(Shape * shape){
 void printShape(Shape * shape){
     // Pas convaincu du fait qu'il faille caster le type
     if (shape->shape_type == POINT){
-        printPoint((Point *) shape);
+        Point *p = shape->ptrShape;
+        printPoint(p);
     }
     else if (shape->shape_type == LINE){
-        printLine((Line *) shape);
+        Line *l = shape->ptrShape;
+        printLine(l);
     }
     else if (shape->shape_type == SQUARE){
-        printSquare((Square *) shape);
+        Square *s = shape->ptrShape;
+        printSquare(s);
     }
     else if (shape->shape_type == RECTANGLE){
-        printRectangle((Rectangle *) shape);
+        Rectangle *r = shape->ptrShape;
+        printRectangle(r);
     }
     else if (shape->shape_type == CIRCLE){
-        printCircle((Circle *) shape);
+        Circle *c = shape->ptrShape;
+        printCircle(c);
     }
     else if (shape->shape_type == POLYGON){
-        printPolygon((Polygon *) shape);
+        Polygon *p = shape->ptrShape;
+        printPolygon(p);
     }
 }
