@@ -158,11 +158,11 @@ void menuPolygone(liste lst_shape){
 void affichageForme(liste lst_shape){
     liste temp = lst_shape;
     printf("\nListe des formes : ");
-    do{
+    while (temp != NULL){
         printf("\n\t%d : ", temp->shape->id);
         printShape(temp->shape);
         temp = temp->succ;
-    } while (temp != NULL);
+    }
     printf("\n");
     menuPrincipal(lst_shape);
 }
