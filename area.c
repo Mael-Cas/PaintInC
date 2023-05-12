@@ -96,3 +96,95 @@ void pixel_point(Shape* shape, Pixel** pixel, int* nb_pixels){
     *nb_pixels = 1;
 }
 
+void pixel_ligne(Shape* shape, Pixel** pixel, int* nb_pixels){
+    Line * l = (Line*) shape->ptrShape;
+    Point pA, pB;
+    if (l->p1.x <= l->p2.x){
+        pA = l->p1;
+        pB = l->p2;
+    } else{
+        pA = l->p2;
+        pB = l->p1;
+    }
+    int dx = pB.x - pA.x;
+    int dy = pB.y - pA.y;
+    int dmin, dmax;
+    if (dx >= abs(dy)){
+        dmax = dx;
+        dmin = dy;
+    } else{
+        dmax = dy;
+        dmin = dx;
+    }
+    int nbSeg = dmin + 1;
+    int nbPix = (dmax + 1)/(dmin + 1);
+    int* tabSeg = (int *) malloc(nbSeg * sizeof(int));
+    for (int i=0; i<nbSeg; i++){
+        tabSeg[i] = nbPix;
+    }
+    int pixRes = (dmax + 1) % (dmin + 1);
+    int *cumuls = (int *)malloc(nbSeg*sizeof(int));
+    cumuls[0]=0;
+    for (int i = 1; i < nbSeg;i++)
+    {
+        cumuls[i] = ((i+1)*pixRes)%(dmin+1) < ((i*pixRes)%(dmin+1));
+        tabSeg[i] = tabSeg[i]+cumuls[i];
+    }
+
+    int nbPixTot = nbPix + pixRes;
+    pixel = (Pixel **) malloc(nbPixTot * sizeof(Pixel *));
+
+    int x=pA.x, y=pA.x;
+    int cpt = 1;
+
+    if (dy < 0){
+        if (dx > abs(dy)){
+            tabSeg[0] -= 1;
+            pixel[0] = create_pixel(x, y);
+            for (int i=0; i<nbSeg - 1; i++){
+                for (int j=0; j<tabSeg[i]; j++){
+                    x += 1;
+                    pixel[cpt] = create_pixel(x, y);
+                    cpt += 1;
+                }
+                y -= 1;
+            }
+        } else{
+            tabSeg[0] -= 1;
+            pixel[0] = create_pixel(x, y);
+            for (int i=0; i<nbSeg - 1; i++){
+                for (int j=0; j<tabSeg[i]; j++){
+                    y -= 1;
+                    pixel[cpt] = create_pixel(x, y);
+                    cpt += 1;
+                }
+                x += 1;
+            }
+        }
+    } else{
+        if (dx > dy){
+            tabSeg[0] -= 1;
+            pixel[0] = create_pixel(x, y);
+            for (int i=0; i<nbSeg - 1; i++){
+                for (int j=0; j<tabSeg[i]; j++){
+                    x += 1;
+                    pixel[cpt] = create_pixel(x, y);
+                    cpt += 1;
+                }
+                y += 1;
+            }
+        } else{
+            tabSeg[0] -= 1;
+            pixel[0] = create_pixel(x, y);
+            for (int i=0; i<nbSeg - 1; i++){
+                for (int j=0; j<tabSeg[i]; j++){
+                    y += 1;
+                    pixel[cpt] = create_pixel(x, y);
+                    cpt += 1;
+                }
+                x += 1;
+            }
+        }
+    }
+}
+
