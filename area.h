@@ -41,4 +41,6 @@ void pixel_rectangle(Shape* shape, Pixel** pixel, int* nb_pixels);
 void pixel_circle(Shape* shape, Pixel** pixel, int* nb_pixels);
 void pixel_polygon(Shape* shape, Pixel** pixel, int* nb_pixels);
 
+Pixel** create_shape_to_pixel(Shape* shape, int *nb_pixels);
+
 #endif //PAINTINC_AREA_H

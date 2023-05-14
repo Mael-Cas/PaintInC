@@ -188,3 +188,92 @@ void pixel_ligne(Shape* shape, Pixel** pixel, int* nb_pixels){
     }
 }
 
+
+void pixel_square(Shape* shape, Pixel** pixel, int* nb_pixels){
+    Square * s = shape->ptrShape;
+    Point p1 = s->top;
+    Point p2 = s->top;
+    p2.y += s->length;
+    Point p3 = s->top;
+    p3.x += s->length;
+    p3.y += s->length;
+    Point p4 = s->top;
+    p4.x = s->length;
+    Shape *l1 = createLineShape(p1.x, p1.y, p2.x, p2.y);
+    Shape *l2 = createLineShape(p2.x, p2.y, p3.x, p3.y);
+    Shape *l3 = createLineShape(p3.x, p3.y, p4.x, p4.y);
+    Shape *l4 = createLineShape(p4.x, p4.y, p1.x, p1.y);
+    pixel_ligne(l1, pixel, nb_pixels);
+    pixel_ligne(l2, pixel, nb_pixels);
+    pixel_ligne(l3, pixel, nb_pixels);
+    pixel_ligne(l4, pixel, nb_pixels);
+
+
+}
+
+
+void pixel_rectangle(Shape* shape, Pixel** pixel, int* nb_pixels){
+    Rectangle * s = shape->ptrShape;
+    Point p1 = s->top;
+    Point p2 = s->top;
+    p2.y += s->height;
+    Point p3 = s->top;
+    p3.y += s->width;
+    p3.x += s->height;
+    Point p4 = s->top;
+    p4.x += s->height;
+    Shape *l1 = createLineShape(p1.x, p1.y, p2.x, p2.y);
+    Shape *l2 = createLineShape(p2.x, p2.y, p3.x, p3.y);
+    Shape *l3 = createLineShape(p3.x, p3.y, p4.x, p4.y);
+    Shape *l4 = createLineShape(p4.x, p4.y, p1.x, p1.y);
+    pixel_ligne(l1, pixel, nb_pixels);
+    pixel_ligne(l2, pixel, nb_pixels);
+    pixel_ligne(l3, pixel, nb_pixels);
+    pixel_ligne(l4, pixel, nb_pixels);
+}
+
+void pixel_polygone(Shape* shape, Pixel** pixel, int* nb_pixels){
+    Polygon * s = shape->ptrShape;
+    for(int i = 0; i < s->n; i++){
+        Point *p1 = s->points[i];
+        Point *p2 = NULL;
+        if(i == s->n){
+            p2 = s->points[0];
+        } else{
+            p2 = s->points[i+1];
+        }
+
+        Shape *l1 = createLineShape(p1->x, p1->y, p2->x, p2->y);
+        pixel_ligne(l1, pixel, nb_pixels);
+    }
+}
+
+Pixel** create_shape_to_pixel(Shape* shape, int* nb_pixels){
+    Pixel ** pixel = (Pixel**) malloc(sizeof(Pixel*));
+    switch(shape->shape_type){
+        case LINE:
+            pixel_ligne(shape, pixel, nb_pixels);
+            break;
+        case CIRCLE:
+            pixel_circle(shape, pixel, nb_pixels);
+            break;
+        case SQUARE:
+            pixel_square(shape, pixel, nb_pixels);
+            break;
+        case RECTANGLE:
+            pixel_rectangle(shape, pixel, nb_pixels);
+            break;
+        case POLYGON:
+            pixel_polygone(shape, pixel, nb_pixels);
+            break;
+        default:
+            break;
+    }
+    return pixel;
+}
+
+void delete_pixel_shape(Pixel** pixel, int nb_pixels){
+    for (int i=0; i<nb_pixels; i++){
+        free(pixel[i]);
+    }
+}
