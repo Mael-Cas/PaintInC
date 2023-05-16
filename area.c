@@ -97,7 +97,7 @@ void pixel_point(Shape* shape, Pixel** pixel, int* nb_pixels){
     *nb_pixels = 1;
 }
 
-void pixel_ligne(Shape* shape, Pixel** pixel, int* nb_pixels){
+void pixel_ligne(Shape* shape, Pixel*** pixel, int* nb_pixels){
     Line * l = (Line*) shape->ptrShape;
     Point pA, pB;
     if (l->p1.x <= l->p2.x){
@@ -190,7 +190,7 @@ void pixel_ligne(Shape* shape, Pixel** pixel, int* nb_pixels){
 }
 
 
-void pixel_square(Shape* shape, Pixel** pixel, int* nb_pixels){
+void pixel_square(Shape* shape, Pixel*** pixel, int* nb_pixels){
     Square * s = shape->ptrShape;
     Point p1 = s->top;
     Point p2 = s->top;
@@ -213,7 +213,7 @@ void pixel_square(Shape* shape, Pixel** pixel, int* nb_pixels){
 }
 
 
-void pixel_rectangle(Shape* shape, Pixel** pixel, int* nb_pixels){
+void pixel_rectangle(Shape* shape, Pixel*** pixel, int* nb_pixels){
     Rectangle * s = shape->ptrShape;
     Point p1 = s->top;
     Point p2 = s->top;
@@ -233,7 +233,7 @@ void pixel_rectangle(Shape* shape, Pixel** pixel, int* nb_pixels){
     pixel_ligne(l4, pixel, nb_pixels);
 }
 
-void pixel_polygone(Shape* shape, Pixel** pixel, int* nb_pixels){
+void pixel_polygone(Shape* shape, Pixel*** pixel, int* nb_pixels){
     Polygon * s = shape->ptrShape;
     for(int i = 0; i < s->n; i++){
         Point *p1 = s->points[i];
