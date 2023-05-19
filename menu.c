@@ -4,6 +4,9 @@
 
 #include "menu.h"
 #include "shape.h"
+#include "area.h"
+
+
 
 liste ajoutShape(Shape* shape, liste lst_shape){
     maillon *nv = (maillon*) malloc(sizeof(maillon));
@@ -23,11 +26,12 @@ liste ajoutShape(Shape* shape, liste lst_shape){
 }
 
 
-void menuPrincipal(liste lst_shape){
+void menuPrincipal(liste lst_shape, Area * area){
     char choix;
     printf("Veuillez choisir une action : ");
     printf("\n\tA- Ajouter une forme");
     printf("\n\tB- Afficher la liste des formes");
+    printf("\n\tD- Imprimer la zone de dessin");
     /* Fonctions pas encore réalisées
     printf("\tC- Supprimer une forme");
     printf("\tD- Tracer le dessin");
@@ -36,16 +40,19 @@ void menuPrincipal(liste lst_shape){
     scanf(" %c", &choix);
     switch (choix) {
         case 'A':
-            choixCreation(lst_shape);
+            choixCreation(lst_shape, area);
         case 'B':
-            affichageForme(lst_shape);
+            affichageForme(lst_shape, area);
+        case 'D':
+            draw_area(area);
+            print_area(area);
         default:
             printf("\nProbleme lors du choix\n");
-            menuPrincipal(lst_shape);
+            menuPrincipal(lst_shape, area);
     }
 }
 
-void choixCreation(liste lst_shape){
+void choixCreation(liste lst_shape, Area * area){
     int choice=0;
     printf("Veuillez choisir un action : ");
     printf("\n\t1- Ajouter un point");
@@ -59,87 +66,97 @@ void choixCreation(liste lst_shape){
     scanf("%d", &choice);
     switch (choice) {
         case 1:
-            menuPoint(lst_shape);
+            menuPoint(lst_shape, area);
         case 2:
-            menuLigne(lst_shape);
+            menuLigne(lst_shape, area);
         case 3:
-            menuCercle(lst_shape);
+            menuCercle(lst_shape, area);
         case 4:
-            menuCarre(lst_shape);
+            menuCarre(lst_shape, area);
         case 5:
-            menuRectangle(lst_shape);
+            menuRectangle(lst_shape, area);
         case 6:
-            menuPolygone(lst_shape);
+            menuPolygone(lst_shape, area);
         case 7:
-            menuPrincipal(lst_shape);
+            menuPrincipal(lst_shape, area);
         default:
             printf("Probleme lors du choix\n");
-            choixCreation(lst_shape);
+            choixCreation(lst_shape, area);
     }
 
 }
 
-void menuPoint(liste lst_shape){
+void menuPoint(liste lst_shape, Area * area){
     int x, y;
     printf("Saisir les informations du point x y : ");
     scanf("%d %d", &x, &y);
-    lst_shape = ajoutShape(createPointShape(x, y), lst_shape);
+    Shape *p = createPointShape(x, y);
+    lst_shape = ajoutShape(p, lst_shape);
+    add_shape_to_area(area, p);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }
 
-void menuLigne(liste lst_shape){
+void menuLigne(liste lst_shape, Area * area){
     int x1, y1, x2, y2;
     printf("Saisir les informations de la ligne : ");
     printf("\n\tSaisir les informations du premier point x1 y1 : ");
     scanf("%d %d", &x1, &y1);
     printf("\tSaisir les informations du point x2 y2 : ");
     scanf("%d %d", &x2, &y2);
-    lst_shape = ajoutShape(createLineShape(x1, y1, x2, y2), lst_shape);
+    Shape * l = createLineShape(x1, y1, x2, y2);
+    lst_shape = ajoutShape(l, lst_shape);
+    add_shape_to_area(area, l);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }
 
 
-void menuCercle(liste lst_shape){
+void menuCercle(liste lst_shape, Area * area){
     int x1, y1, radius;
     printf("Saisir les informations du cerlce : ");
     printf("\n\tSaisir les coordonnees du centre x y : ");
     scanf("%d %d", &x1, &y1);
     printf("\tSaisir la taille du rayon : ");
     scanf("%d", &radius);
-    lst_shape = ajoutShape(createCircleShape(x1, y1, radius), lst_shape);
+    Shape * c = createCircleShape(x1, y1, radius);
+    lst_shape = ajoutShape(c, lst_shape);
+    add_shape_to_area(area, c);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 
 
 }
 
-void menuCarre(liste lst_shape){
+void menuCarre(liste lst_shape, Area * area){
     int x1, y1, length;
     printf("Saisir les informations du carre : ");
     printf("\n\tSaisir les informations du point x y : ");
     scanf("%d %d", &x1, &y1);
     printf("\tSaisir la longueur du cote : ");
     scanf("%d", &length);
-    lst_shape = ajoutShape(createSquareShape(x1, y1, length), lst_shape);
+    Shape  * s = createSquareShape(x1, y1, length);
+    lst_shape = ajoutShape(s, lst_shape);
+    add_shape_to_area(area, s);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }
 
-void menuRectangle(liste lst_shape){
+void menuRectangle(liste lst_shape, Area * area){
     int x,y,w,h;
     printf("Saisir les informations du rectangle : ");
     printf("\n\tSaisir les informations du point x y : ");
     scanf("%d %d", &x, &y);
     printf("\tSaisir la hauteur et la largeur du rectangle h w : ");
     scanf("%d %d", &h, &w);
-    lst_shape = ajoutShape(createRectangleShape(x,y,w,h), lst_shape);
+    Shape * r = createRectangleShape(x,y,w,h);
+    lst_shape = ajoutShape(r, lst_shape);
+    add_shape_to_area(area, r);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }
 
-void menuPolygone(liste lst_shape){
+void menuPolygone(liste lst_shape, Area * area){
     int n;
     printf("Saisir les informations du polygone : ");
     printf("\n\tVeuillez saisir un nombre de points : ");
@@ -151,12 +168,14 @@ void menuPolygone(liste lst_shape){
         scanf("%d %d", (lst+i), (lst+i+1));
         cpt++;
     }
-    lst_shape = ajoutShape(createPolygonShape(lst, n*2), lst_shape);
+    Shape * p = createPolygonShape(lst, n*2);
+    lst_shape = ajoutShape(p, lst_shape);
+    add_shape_to_area(area, p);
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }
 
-void affichageForme(liste lst_shape){
+void affichageForme(liste lst_shape, Area * area){
     liste temp = lst_shape;
     printf("\nListe des formes : ");
     while (temp != NULL){
@@ -165,5 +184,5 @@ void affichageForme(liste lst_shape){
         temp = temp->succ;
     }
     printf("\n");
-    menuPrincipal(lst_shape);
+    menuPrincipal(lst_shape, area);
 }

@@ -46,6 +46,10 @@ Point *createPoint(int x, int y);
 void deletePoint(Point *p);
 void printPoint(Point *p);
 
+Line *createLine(Point *p1, Point *p2);
+void deleteLine(Line *l);
+void printLine(Line *l);
+
 Square *createSquare(Point *top, int length);
 void deleteSquare(Square *s);
 void printSquare(Square *s);
