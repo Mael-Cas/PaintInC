@@ -17,6 +17,7 @@ liste ajoutShape(Shape* shape, liste lst_shape){
             tmp = tmp->succ;
         }
         tmp->succ = nv;
+        *
     }
     return lst_shape;
 }

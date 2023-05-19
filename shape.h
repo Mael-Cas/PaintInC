@@ -23,6 +23,7 @@ typedef struct Square {
     int length;
 } Square;
 
+
 typedef struct Rectangle {
     Point top;// Coin supérieur gauche
     int width, height;// Longueur et largeur

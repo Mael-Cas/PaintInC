@@ -159,6 +159,8 @@ void pixel_ligne(Shape* shape, Pixel*** pixel, int* nb_pixels){
                     y -= 1;
                     pixel[cpt] = create_pixel(x, y);
                     cpt += 1;
+
+
                 }
                 x += 1;
             }
