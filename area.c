@@ -110,6 +110,7 @@ void pixel_ligne(Shape* shape, Pixel*** pixel, int* nb_pixels){
     int dx = pB.x - pA.x;
     int dy = pB.y - pA.y;
     int dmin, dmax;
+
     if (dx >= abs(dy)){
         dmax = dx;
         dmin = dy;
