@@ -77,6 +77,7 @@ void printRectangle(Rectangle *r) {
 //Circle
 
 Circle *createCircle(Point *center, int radius) {
+
     Circle *c = malloc(sizeof(Circle));
     c->center = *center;
     c->radius = radius;
@@ -152,6 +153,7 @@ Shape *createRectangleShape(int px, int py, int width, int height) {
 }
 
 Shape *createCircleShape(int px, int py, int radius) {
+
     Shape *shp = createEmptyShape(CIRCLE);
     Point *p = createPoint(px, py);
     Circle *c = createCircle(p, radius);
