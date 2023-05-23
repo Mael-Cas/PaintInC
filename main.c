@@ -34,10 +34,12 @@ int main() {
 
             switch (id) {
                 case 0 :
+                    clear();
                     printf("Au revoir !\n");
                     exit(0);
                     break;
                 case 1 :
+                    clear();
                     s = createPointShape(command->int_params[0], command->int_params[1]);
                     lst_shape = ajoutShape(s, lst_shape);
                     add_shape_to_area(area, s);
@@ -45,6 +47,7 @@ int main() {
                     print_area(area);
                     break;
                 case 2 :
+                    clear();
                     s = createLineShape(command->int_params[0], command->int_params[1], command->int_params[2],
                                         command->int_params[3]);
                     lst_shape = ajoutShape(s, lst_shape);
@@ -53,6 +56,7 @@ int main() {
                     print_area(area);
                     break;
                 case 3 :
+                    clear();
                     s = createRectangleShape(command->int_params[0], command->int_params[1], command->int_params[2],
                                              command->int_params[3]);
                     lst_shape = ajoutShape(s, lst_shape);
@@ -61,6 +65,7 @@ int main() {
                     print_area(area);
                     break;
                 case 4 :
+                    clear();
                     s = createCircleShape(command->int_params[0], command->int_params[1], command->int_params[2]);
                     lst_shape = ajoutShape(s, lst_shape);
                     add_shape_to_area(area, s);
@@ -68,6 +73,7 @@ int main() {
                     print_area(area);
                     break;
                 case 5 :
+                    clear();
                     s = createSquareShape(command->int_params[0], command->int_params[1], command->int_params[2]);
                     lst_shape = ajoutShape(s, lst_shape);
                     add_shape_to_area(area, s);
@@ -75,6 +81,7 @@ int main() {
                     print_area(area);
                     break;
                 case 6 :
+                    clear();
                     for (int i = 0; i < command->int_size * 2; i += 2) {
                         lst[i] = command->int_params[i];
                         lst[i + 1] = command->int_params[i + 1];
@@ -86,21 +93,26 @@ int main() {
                     print_area(area);
                     break;
                 case 7 :
+                    clear();
                     draw_area(area);
                     print_area(area);
                     break;
                 case 8 :
+                    clear();
                     lst_shape = suppFormeBash(lst_shape, area, command->int_params[0]);
                     break;
                 case 9 :
+                    clear();
                     erase_area(area);
                     draw_area(area);
                     print_area(area);
                     break;
                 case 10 :
+                    clear();
                     aide();
                     break;
                 case 11 :
+                    clear();
                     temp = lst_shape;
                     printf("\nListe des formes : ");
                     while (temp != NULL){
@@ -111,10 +123,10 @@ int main() {
                     printf("\n");
                     break;
                 default:
+                    clear();
                     printf("Commande inconnue\n");
                     break;
             }
-            clear();
             free_cmd(command);
 
         }

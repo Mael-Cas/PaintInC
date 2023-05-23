@@ -91,7 +91,9 @@ void draw_area(Area* area){
         for (int j=0; j < nb_pixels; j++){
             px = pixels[j]->px;
             py = pixels[j]->py;
-            area->mat[px][py] = 1;
+            if (!(px > area->height - 1 || py > area->width - 1)){
+                area->mat[px][py] = 1;
+            }
         }
     }
 }
