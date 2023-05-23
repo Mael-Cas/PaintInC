@@ -34,31 +34,31 @@ void free_cmd(Command *command) {
     free(command);
 }
 
-int read_exec_command(Command* command){
+int read_exec_cmd(Command* command){
 
-    if(command->name == "exit"){
+    if(strcmp(command->name, "exit") == 0){
         return 0;
-    }else if(command->name == "clear"){
+    }else if(strcmp(command->name, "clear") == 0){
         clear();
-    }else if(command->name == "point"){
+    }else if(strcmp(command->name, "point")== 0){
         return 1;
-    }else if(command->name == "line"){
+    }else if(strcmp(command->name, "line")== 0){
         return 2;
-    }else if(command->name == "rectangle"){
+    }else if(strcmp(command->name, "rectangle")== 0){
         return 3;
-    }else if(command->name == "circle"){
+    }else if(strcmp(command->name, "circle")== 0){
         return 4;
-    }else if(command->name == "square"){
+    }else if(strcmp(command->name, "square")==0){
         return 5;
-    }else if(command->name == "polygon"){
+    }else if(strcmp(command->name, "polygon")==0){
         return 6;
-    }else if(command->name == "plot"){
+    }else if(strcmp(command->name, "plot")==0){
         return 7;
-    }else if(command->name == "delete"){
+    }else if(strcmp(command->name, "delete")== 0){
         return 8;
-    }else if(command->name == "erase"){
+    }else if(strcmp(command->name, "erase")== 0){
         return 9;
-    }else if(command->name == "help"){
+    }else if(strcmp(command->name, "help")== 0){
         return 10;
     }else{
         return 404;
@@ -66,53 +66,29 @@ int read_exec_command(Command* command){
 }
 void read_from_stdin(Command* command)
 {
-    char token[50], cle[10];
-    char *list_str;
-    int i = 0, j, value;
-    char *endcle;
+    char input[50];
     printf(">>");
-    fgets(token, 50, stdin);
-    while(token[i] != '\n')
-    {
-        j = 0;
+    fgets(input, sizeof(input), stdin);
 
-        if (token[i+j] == ' ' || token[i+j] == '\n')
-            i++;
-        cle[0] = '\0';
-        while(token[i+j] != ' ' && token[i+j] != '\n')
-        {
-            cle[j] = token[i+j];
-
-            if (i == 0 && (token[j+1]==' ' || token[j+1] == '\n'))
-            {
-                for (int a = 0; a <j+1; a++)
-                {
-                    command->name[a] = cle[a];
-                }
-
-                command->name[j+1] = '\0';
-            }
-
-
-            if (i!=0 && (token[i+j+1]==' ' || token[i+j+1]=='\n'))
-            {
-                cle[j+1] = '\0';
-                endcle = NULL;
-
-                value = strtol(cle, &endcle, 10);
-                if (!isdigit(cle[0])) {
-
-                    add_str_param(command, cle);
-                }
-                else {
-                    add_int_param(command, value);
-                }
-            }
-            j++;
-        }
-        i += j;
+    // Supprimer le caractère de nouvelle ligne à la fin
+    if (input[strlen(input) - 1] == '\n') {
+        input[strlen(input) - 1] = '\0';
     }
+
+    char* token = strtok(input, " "); // Séparer la phrase par des espaces
+    int index = 0;
+
+    while (token != NULL) {
+        if (index == 0) {
+            strcpy(command->name, token);
+        } else {
+            command->int_params[index - 1] = atoi(token);
+
+        }
+
+        token = strtok(NULL, " ");
+        index++;
+    }
+
+    command->int_size = index - 1;
 }
-
-
-
