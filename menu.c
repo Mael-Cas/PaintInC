@@ -30,10 +30,9 @@ void menuPrincipal(liste lst_shape, Area * area){
     printf("Veuillez choisir une action : ");
     printf("\n\tA- Ajouter une forme");
     printf("\n\tB- Afficher la liste des formes");
+    printf("\n\tC- Supprimer une forme");
     printf("\n\tD- Imprimer la zone de dessin");
     /* Fonctions pas encore réalisées
-    printf("\tC- Supprimer une forme");
-    printf("\tD- Tracer le dessin");
     printf("\tE- Aide");*/
     printf("\nVotre choix : ");
     scanf(" %c", &choix);
@@ -42,6 +41,9 @@ void menuPrincipal(liste lst_shape, Area * area){
             choixCreation(lst_shape, area);
         case 'B':
             affichageForme(lst_shape, area);
+        case 'C':
+            lst_shape = suppForme(lst_shape, area);
+            menuPrincipal(lst_shape, area);
         case 'D':
             draw_area(area);
             print_area(area);
@@ -184,4 +186,50 @@ void affichageForme(liste lst_shape, Area * area){
     }
     printf("\n");
     menuPrincipal(lst_shape, area);
+}
+
+liste suppForme(liste lst_shape, Area * area){
+    liste temp = lst_shape;
+    printf("\nListe des formes : ");
+    while (temp != NULL){
+        printf("\n\t%d : ", temp->shape->id);
+        printShape(temp->shape);
+        temp = temp->succ;
+    }
+    printf("\n");
+    int id=0;
+    int cond = 1;
+    printf("Veuillez rentrer l'id de la forme à supprimer : ");
+    scanf("%d", &id);
+    if (lst_shape != NULL){
+        maillon * tmp = lst_shape;
+        maillon * ptmp = NULL;
+        while (tmp != NULL && cond == 1){
+            if (tmp->shape->id == id){
+
+                if (ptmp == NULL){
+                    lst_shape = tmp->succ;
+                    remove_shape_to_area(area, tmp->shape);
+                    free(tmp);
+                    free(ptmp);
+                    cond = 0;
+                } else if (tmp->succ == NULL){
+                    remove_shape_to_area(area, tmp->shape);
+                    ptmp->succ = NULL;
+                    free(tmp);
+                    cond = 0;
+                } else{
+                    ptmp->succ = tmp->succ;
+                    remove_shape_to_area(area,tmp->shape);
+                    free(tmp);
+                    cond = 0;
+                }
+            } else{
+                ptmp = tmp;
+                tmp = tmp->succ;
+            }
+        }
+    }
+    printf("\n");
+    return lst_shape;
 }

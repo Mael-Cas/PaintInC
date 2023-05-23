@@ -28,6 +28,23 @@ void add_shape_to_area(Area* area, Shape* shape){
     area->nb_shape++;
 }
 
+void remove_shape_to_area(Area* area, Shape* shape){
+    int cpt = 0;
+    int bo = 0;
+    for (int i=0; i<area->nb_shape; i++){
+        if (area->shapes[i]->id == shape->id){
+            for (int j=i; j < area->nb_shape; j++){
+                if (j == area->nb_shape - 1){
+                    free(area->shapes[j]);
+                } else{
+                    area->shapes[j] = area->shapes[j+1];
+                }
+            }
+        }
+    }
+    area->nb_shape--;
+}
+
 void clear_area(Area* area){
     for(int i = 0; i < area->height; i++){
         for(int j = 0; j < area->width; j++){
@@ -58,7 +75,14 @@ void delete_area(Area* area){
 
 void draw_area(Area* area){
     Pixel** pixels;
-
+    int height = area->height;
+    int width = area->width;
+    printf("Nombre de formes : %d\n", area->nb_shape);
+    for (int i=0; i<height; i++){
+        for(int j=0; j<width; j++){
+            area->mat[i][j] = 0;
+        }
+    }
     for (int i=0; i<area->nb_shape; i++){
         int *nb_pixels;
         *nb_pixels = 0;
