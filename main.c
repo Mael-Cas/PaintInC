@@ -29,6 +29,7 @@ int main() {
             int id = read_exec_cmd(command);
             int *lst = (int *) malloc(command->int_size * 2 * sizeof(int));
             int cpt = 1;
+            liste temp = NULL;
 
 
             switch (id) {
@@ -89,6 +90,7 @@ int main() {
                     print_area(area);
                     break;
                 case 8 :
+                    lst_shape = suppFormeBash(lst_shape, area, command->int_params[0]);
                     break;
                 case 9 :
                     erase_area(area);
@@ -96,8 +98,18 @@ int main() {
                     print_area(area);
                     break;
                 case 10 :
+                    aide();
                     break;
-
+                case 11 :
+                    temp = lst_shape;
+                    printf("\nListe des formes : ");
+                    while (temp != NULL){
+                        printf("\n\t%d : ", temp->shape->id);
+                        printShape(temp->shape);
+                        temp = temp->succ;
+                    }
+                    printf("\n");
+                    break;
                 default:
                     printf("Commande inconnue\n");
                     break;

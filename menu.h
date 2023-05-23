@@ -28,6 +28,7 @@ void menuRectangle(liste lst_shape, Area * area);
 void menuPolygone(liste lst_shape, Area * area);
 liste suppForme(liste lst_shape, Area * area);
 void dessin(liste lst_shape);
+liste suppFormeBash(liste lst_shape, Area * area, int id);
 void aide();
 
 

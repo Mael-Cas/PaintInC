@@ -60,6 +60,8 @@ int read_exec_cmd(Command* command){
         return 9;
     }else if(strcmp(command->name, "help")== 0){
         return 10;
+    }else if(strcmp(command->name, "shapes")== 0) {
+        return 11;
     }else{
         return 404;
     }

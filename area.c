@@ -84,11 +84,11 @@ void draw_area(Area* area){
         }
     }
     for (int i=0; i<area->nb_shape; i++){
-        int *nb_pixels;
-        *nb_pixels = 0;
-        pixels = create_shape_to_pixel(area->shapes[i], nb_pixels);
+        int nb_pixels;
+        nb_pixels = 0;
+        pixels = create_shape_to_pixel(area->shapes[i], &nb_pixels);
         int px=0, py=0;
-        for (int j=0; j < *nb_pixels; j++){
+        for (int j=0; j < nb_pixels; j++){
             px = pixels[j]->px;
             py = pixels[j]->py;
             area->mat[px][py] = 1;
