@@ -14,7 +14,7 @@ struct command{
 };
 typedef struct command Command;
 
-Command* create_command(char* name);
+Command* create_command();
 void add_str_param(Command* command, char* param);
 void add_int_param(Command* command, int param);
 void free_cmd(Command* command);
