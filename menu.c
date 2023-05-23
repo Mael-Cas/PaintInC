@@ -233,3 +233,46 @@ liste suppForme(liste lst_shape, Area * area){
     printf("\n");
     return lst_shape;
 }
+
+void aide(){
+    printf("Listes des commandes : \n");
+    printf("\texit\tQuitte le programme\n");
+    printf("\tclear\tClear le terminal\n");
+    printf("\tpoint x y\tCréer un point de coordonnées x,y\n");
+    printf("\tline x1 y1 x2 y2\tCréer une ligne\n");
+    printf("\trectangle x y width height\tCréer un rectangle\n");
+}
+
+liste suppFormeBash(liste lst_shape, Area * area, int id){
+    int cond = 1;
+    if (lst_shape != NULL){
+        maillon * tmp = lst_shape;
+        maillon * ptmp = NULL;
+        while (tmp != NULL && cond == 1){
+            if (tmp->shape->id == id){
+
+                if (ptmp == NULL){
+                    lst_shape = tmp->succ;
+                    remove_shape_to_area(area, tmp->shape);
+                    free(tmp);
+                    free(ptmp);
+                    cond = 0;
+                } else if (tmp->succ == NULL){
+                    remove_shape_to_area(area, tmp->shape);
+                    ptmp->succ = NULL;
+                    free(tmp);
+                    cond = 0;
+                } else{
+                    ptmp->succ = tmp->succ;
+                    remove_shape_to_area(area,tmp->shape);
+                    free(tmp);
+                    cond = 0;
+                }
+            } else{
+                ptmp = tmp;
+                tmp = tmp->succ;
+            }
+        }
+    }
+    return lst_shape;
+}
