@@ -26,6 +26,7 @@ int main() {
 
             Command *command = create_command();
             read_from_stdin(command);
+
             int id = read_exec_cmd(command);
             int *lst = (int *) malloc(command->int_size * 2 * sizeof(int));
             int cpt = 1;
@@ -121,6 +122,8 @@ int main() {
                         temp = temp->succ;
                     }
                     printf("\n");
+                    break;
+                case 12 :
                     break;
                 default:
                     clear();

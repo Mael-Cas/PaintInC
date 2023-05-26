@@ -40,6 +40,7 @@ int read_exec_cmd(Command* command){
         return 0;
     }else if(strcmp(command->name, "clear") == 0){
         clear();
+        return 12;
     }else if(strcmp(command->name, "point")== 0){
         return 1;
     }else if(strcmp(command->name, "line")== 0){
