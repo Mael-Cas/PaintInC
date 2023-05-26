@@ -236,11 +236,17 @@ liste suppForme(liste lst_shape, Area * area){
 
 void aide(){
     printf("Listes des commandes : \n");
-    printf("\texit\tQuitte le programme\n");
-    printf("\tclear\tClear le terminal\n");
-    printf("\tpoint x y\tCréer un point de coordonnées x,y\n");
-    printf("\tline x1 y1 x2 y2\tCréer une ligne\n");
-    printf("\trectangle x y width height\tCréer un rectangle\n");
+    printf("\texit\t|\tQuitte le programme\n");
+    printf("\tclear\t|\tClear le terminal\n");
+    printf("\tpoint x y\t|\tCreer un point de coordonnees x,y\n");
+    printf("\tline x1 y1 x2 y2\t|\tCreer une ligne\n");
+    printf("\trectangle x y width height\t|\tCreer un rectangle\n");
+    printf("\tsquare x y length\t|\tCreer un carré\n");
+    printf("\tcircle x y radius\t|\tCreer un cercle\n");
+    printf("\tpolygon x1 y1 x2 y2 ... xn yn\t|\tCreer un polygon de n points\n");
+    printf("\tplot\t|\tAfficher graphiquement la zone de dessin\n");
+    printf("\tshapes\t|\tAfficher la liste des formes\n");
+    printf("\tdelete id\t|\tSupprimer la forme d'identifiant id\n");
 }
 
 liste suppFormeBash(liste lst_shape, Area * area, int id){
