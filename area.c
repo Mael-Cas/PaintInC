@@ -33,7 +33,7 @@ void remove_shape_to_area(Area* area, Shape* shape){
     int bo = 0;
     for (int i=0; i<area->nb_shape; i++){
         if (area->shapes[i]->id == shape->id){
-            for (int j=i; j < area->nb_shape; j++){
+            for (int j=i; j < area->nb_shape-1; j++){
                 if (j == area->nb_shape - 1){
                     free(area->shapes[j]);
                 } else{

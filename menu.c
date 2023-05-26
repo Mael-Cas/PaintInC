@@ -254,18 +254,14 @@ liste suppFormeBash(liste lst_shape, Area * area, int id){
                 if (ptmp == NULL){
                     lst_shape = tmp->succ;
                     remove_shape_to_area(area, tmp->shape);
-                    free(tmp);
-                    free(ptmp);
                     cond = 0;
                 } else if (tmp->succ == NULL){
                     remove_shape_to_area(area, tmp->shape);
                     ptmp->succ = NULL;
-                    free(tmp);
                     cond = 0;
                 } else{
                     ptmp->succ = tmp->succ;
                     remove_shape_to_area(area,tmp->shape);
-                    free(tmp);
                     cond = 0;
                 }
             } else{
@@ -273,6 +269,8 @@ liste suppFormeBash(liste lst_shape, Area * area, int id){
                 tmp = tmp->succ;
             }
         }
+        free(tmp);
+
     }
     return lst_shape;
 }
